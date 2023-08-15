@@ -1,0 +1,10 @@
+
+/* SignUp form styles */
+.container > .row > .col-12 {
+	min-height: 90vh;
+}
+
+form {
+	background-color: var(--secondary-color);
+	box-shadow: var(--shadow-default);
+}
