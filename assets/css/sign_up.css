@@ -1,5 +1,8 @@
 
 /* SignUp form styles */
+header {
+	background-color: var(--primary-color);
+}
 .container > .row > .col-12 {
 	min-height: 90vh;
 }
