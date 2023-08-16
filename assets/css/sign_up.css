@@ -2,9 +2,10 @@
 /* SignUp form styles */
 header {
 	background-color: var(--primary-color);
+	z-index: 1050;
 }
-.container > .row > .col-12 {
-	min-height: 90vh;
+.container > .row:nth-child(2) {
+	min-height: 80vh;
 }
 
 form {

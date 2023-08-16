@@ -24,7 +24,7 @@
 	<link rel="stylesheet" href="../assets/css/sign_up.css">
 
 	<!-- JS -->
-	<script src="script.js" defer></script>
+	<script type="module" src="script.js"></script>
 </head>
 
 <body>
@@ -54,32 +54,35 @@
 	</header>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-12 d-flex justify-content-center align-items-center">
+		<div class="row justify-content-center">
+			<div id="error-message" class="col-12 col-md-6"></div>
+		</div>
+		<div class="row mt-3">
+			<div id="form" class="col-12 d-flex justify-content-center align-items-center">
 
 				<form class="p-3 py-4 p-sm-5 text-center rounded-4">
 					<h1 class="fw-semibold">Sign Up</h1>
 					<span class="muted-color">Sign up now and get access to exclusive content!</span>
 
 					<div class="input-group mt-4">
-						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1" id="username">
+						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1">
 							<span class="material-symbols-rounded fw-light fs-2 align-bottom">person</span>
 						</span>
 						<input id="username" type="text" required minlength="2" maxlength="20" class="form-control form-control-lg rounded-end-5 border-0" placeholder="Username">
 					</div>
 
 					<div class="input-group mt-2">
-						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1" id="username">
+						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1">
 							<span class="material-symbols-rounded fw-light fs-2 align-bottom">mail</span>
 						</span>
 						<input id="email" type="email" required minlength="2" maxlength="30" class="form-control form-control-lg rounded-end-5 border-0" placeholder="E-Mail">
 					</div>
 
 					<div class="input-group mt-2">
-						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1" id="username">
+						<span class="input-group-text rounded-start-5 border-0 bg-white pe-0 pb-1">
 							<span class="material-symbols-rounded fw-light fs-2 align-bottom">lock</span>
 						</span>
-						<input id="password" type="password" required minlength="6" maxlength="30" class="form-control form-control-lg rounded-end-5 border-0" placeholder="Password">
+						<input id="password" type="password" required minlength="6" maxlength="30" class="form-control form-control-lg rounded-end-5 border-0" placeholder="Password" pattern="^\S+$" title="Password cannot contain spaces">
 					</div>
 
 					<button id="sigupBtn" class="btn btn-default mt-4 rounded-5 py-2 w-100">Create Account</button>
