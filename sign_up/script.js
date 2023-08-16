@@ -1,11 +1,12 @@
-import { User } from "../../server/value_objects/User.js";
+import { User } from "../assets/value_objects/User.js";
 
 // initialize all Bootstrap popovers
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
 
-const serverBaseUrl = 'http://localhost:8080';
+let serverBaseUrl = 'http://localhost:8080';
+serverBaseUrl = "https://psychometricsguide-server.vercel.app";
 
 let errorMessageField = document.getElementById('error-message');
 
