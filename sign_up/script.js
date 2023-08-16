@@ -23,8 +23,9 @@ let loginBtn = document.getElementById('loginBtn');
 sigupBtn.onclick = async (event) => {
 
 	// redirect with no values (temporary)
-	if (usernameField.value == '' && emailField.value == '' && passwordField.value == '')
-	redirect('../home/');
+	if (usernameField.value == '' && emailField.value == '' && passwordField.value == '') {
+		redirect('../home/');
+	}
 
 	// Create account
 	let user = createNewUser(usernameField.value, emailField.value, passwordField.value);
@@ -108,13 +109,14 @@ function validatePassword(password) {
 	return false;
 }
 
-async function showErrorMessage(response) {
-
-	errorMessageField.innerHTML = `
+async function showErrorMessage(response)
+{
+	errorMessageField.innerHTML =
+	`
 	<div class="alert alert-danger alert-dismissible mb-0 mt-3 fade show">
-	<h5>Error ${response.status}</h5>
-	${await response.text()}
-	<div class="btn-close" data-bs-dismiss="alert"></div>
+		<h5>Error ${response.status}</h5>
+		${await response.text()}
+		<div class="btn-close" data-bs-dismiss="alert"></div>
 	</div>`;
 }
 
