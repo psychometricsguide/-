@@ -97,3 +97,22 @@ for (let i = 0; i < researchData.length; i++)
     </div>
     `;
 }
+
+// Share buttons
+const shareButton = document.getElementById('shareButton');
+
+// Define the article link you want to share
+const articleLink = 'https://www.example.com/article';
+
+// Add a click event listener to the share button
+shareButton.addEventListener('click', () => {
+  // Check if the browser supports the share API
+  if (navigator.share) {
+    // Use the share API to trigger the native sharing dialog
+    navigator.share({
+      title: 'Share Article',
+      url: articleLink
+    })
+  }
+});
+
