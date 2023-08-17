@@ -1,0 +1,13 @@
+#content {
+	min-height: 95vh;
+}
+
+#article-image {
+	min-height: 250px;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	filter: blur(1px);
+	-webkit-filter: blur(1px);
+}

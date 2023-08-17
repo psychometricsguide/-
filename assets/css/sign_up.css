@@ -1,9 +1,6 @@
 
 /* SignUp form styles */
-header {
-	background-color: var(--primary-color);
-	z-index: 1050;
-}
+
 .container > .row:nth-child(2) {
 	min-height: 80vh;
 }

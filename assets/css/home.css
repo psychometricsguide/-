@@ -1,0 +1,41 @@
+
+main {
+	overflow-x: hidden;
+}
+
+.content-card {
+	box-shadow: var(--shadow-default);
+	background-color: var(--secondary-color);
+	height: 100%;
+	width: 100%;
+	border: 1px solid var(--accent-light-color);
+}
+
+.card-img-container {
+	width: 100%;
+	min-height: 200px;
+	max-height: 200px;
+    height: 100%;
+
+    background-size: cover;
+    background-position: center;
+	background-color: var(--accent-color);
+}
+
+.card-title {
+	font-family: var(--font-eb-garamond);
+	font-weight: 600;
+}
+
+.content-card .card-body span, .content-card .card-body i {
+	transition: none !important;
+}
+
+.content-card a:hover {
+	text-decoration: underline;
+}
+
+.likes:hover, .dislikes:hover, .share:hover {
+	cursor: pointer;
+}
+

@@ -5,8 +5,8 @@ const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
 
-let serverBaseUrl = 'http://localhost:8080';
-serverBaseUrl = "https://psychometricsguide-server.vercel.app";
+// const serverBaseUrl = 'http://localhost:8080';
+const serverBaseUrl = "https://psychometricsguide-server.vercel.app";
 
 let errorMessageField = document.getElementById('error-message');
 
