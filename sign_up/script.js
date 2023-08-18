@@ -5,8 +5,7 @@ const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
 
-// const serverBaseUrl = 'http://localhost:8080';
-const serverBaseUrl = "https://psychometricsguide-server.vercel.app";
+import { serverBaseUrl } from "../assets/settings/serverURL.js";
 
 let errorMessageField = document.getElementById('error-message');
 
@@ -79,7 +78,7 @@ loginBtn.onclick = async (event) => {
 function createNewUser(username, email, password)
 {
 	if (validateUsername(username) && validateEmail(email) && validatePassword(password)) {
-		let user = new User(0, username, email, password);
+		let user = new User(username, email, password);
 		return user;
 	} else {
 		return null;

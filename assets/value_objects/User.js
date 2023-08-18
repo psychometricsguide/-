@@ -1,11 +1,9 @@
 
-export function User(id, username, email, password)
+export function User(username, email, password)
 {
-	this.id = id,
 	this.username = username,
 	this.email = email,
-	this.password = password,
-	this.created = this.getDate();
+	this.password = password
 }
 
 User.prototype.getDate = function()
