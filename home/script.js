@@ -8,7 +8,7 @@ const cardContainer = document.getElementById("card-container");
 
 cardContainer.onclick = (event) => {
 	const target = event.target.closest('.likes') || event.target.closest('.dislikes');
-	if (target) {
+	if (target && cardContainer.contains(target)) {
 		updateLikesDislikes(target);
 	}
 }
@@ -62,7 +62,6 @@ import { serverBaseUrl } from "../assets/settings/serverURL.js";
 document.addEventListener("DOMContentLoaded", async () => {
     let response = await fetch(serverBaseUrl + '/posts');
     const posts = (await response.json()).posts;
-    console.log(posts);
 
     for (let i = 0; i < posts.length; i++)
     {
