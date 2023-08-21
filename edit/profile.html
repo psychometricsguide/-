@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Article</title>
+	<title>Edit Profile</title>
 
 	<!-- Favicon -->
 	<link rel="icon" href="../assets/images/favicon.png" type="image/png" sizes="64x64">
@@ -17,10 +18,17 @@
 
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="../assets/css/global.css">
-	<link rel="stylesheet" href="../assets/css/article.css">
 
+	<!-- JS -->
 	<script type="module" src="script.js"></script>
 </head>
+
+<style>
+	main .container {
+		min-height: 80vh;
+	}
+</style>
+
 
 <body>
 	<!-- Navbar -->
@@ -114,16 +122,46 @@
 
 	<main>
 		<div class="container">
-			<div id="content" class="row py-4 justify-content-center">
-				<div class="col-12 col-md-10 col-xl-9">
-					<div id="article-image" class="rounded-4 mb-3 border-accent-light d-none"></div>
-					<p id="article-type" class="accent-color text-center fw-semibold"></p>
-					<h1 id="title" class="fw-semibold"></h1>
-					<h3 id="subtitle" class="my-4"></h3>
-					<p id="mainText"></p>
+			<div class="row justify-content-center">
+				<div id="error-message" class="col-12 col-md-6"></div>
+			</div>
 
-					<div id="error-message"></div>
+			<div class="row py-5 justify-content-center gap-4">
+
+				<div class="col-12 col-md-5 col-lg-4 d-flex flex-column align-items-center">
+					<img id="avatar" src="../assets/images/avatars/user-placeholder.webp" class="rounded-circle user-avatar" height="150" alt="avatar">
+
+					<select id="user-avatars" class="form-select form-select-lg mb-3 mt-4">
+						<option value="../assets/images/avatars/user-placeholder.webp">Default avatar</option>
+						<option value="../assets/images/avatars/default-avatar1.png">Avatar 1</option>
+						<option value="../assets/images/avatars/default-avatar2.png">Avatar 2</option>
+						<option value="../assets/images/avatars/default-avatar3.png">Avatar 3</option>
+						<option value="../assets/images/avatars/default-avatar4.png">Avatar 4</option>
+						<option value="../assets/images/avatars/default-avatar5.png">Avatar 5</option>
+					</select>
 				</div>
+
+				<form class="col-12 col-lg-8">
+					<!-- Username field -->
+					<div class="form-floating mb-3">
+						<input required minlength="2" maxlength="25" type="text" class="form-control" id="username" placeholder="">
+						<label for="username" class="muted-color">Username</label>
+					</div>
+
+					<!-- Email field -->
+					<div class="form-floating mb-3">
+						<input required minlength="2" maxlength="50" type="email" class="form-control" id="email" placeholder="">
+						<label for="floatingInput" class="muted-color">Email address</label>
+					</div>
+
+					<!-- Bio field -->
+					<div class="form-floating">
+						<input type="text" class="form-control" id="bio" placeholder="">
+						<label for="bio" class="muted-color">Bio</label>
+					</div>
+
+					<button id="update-profile-btn" class="btn btn-default px-4 py-2 mt-4">Update Profile</button>
+				</form>
 			</div>
 		</div>
 	</main>
@@ -134,7 +172,6 @@
 				<div class="col-12">
 					<div class="text-center">
 						<h3>Contact</h3>
-
 						<div class="d-flex justify-content-center gap-4">
 							<a href="#footer">
 								<i class="fa-brands fa-facebook fa-2xl"></i>
@@ -146,13 +183,13 @@
 								<i class="fa-brands fa-instagram fa-2xl"></i>
 							</a>
 						</div>
+						<hr>
+						<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
 					</div>
-					<hr>
-					<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
 				</div>
 			</div>
 		</div>
 	</footer>
-</body>
 
+</body>
 </html>

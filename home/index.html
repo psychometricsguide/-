@@ -67,11 +67,11 @@
 
 						<li class="nav-item dropdown d-flex align-items-center justify-content-center">
 							<a class="nav-link dropdown-toggle p-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-								<i class="fa-solid fa-circle-user fa-2xl"></i>
+								<img id="user-avatar" src="../assets/images/avatars/user-placeholder.webp" class="rounded-circle" height="40" alt="avatar">
 							</a>
 							<ul class="dropdown-menu dropdown-menu-end px-2">
 								<li>
-									<a class="dropdown-item rounded-3" href="#">
+									<a id="user-profile-link" class="dropdown-item rounded-3" href="#">
 										<i class="fa-solid fa-user muted-color"></i>
 										Profile
 									</a>
@@ -116,7 +116,7 @@
 
 	<main>
 		<div class="container">
-			<div class="row d-flex justify-content-center">
+			<div class="row justify-content-center">
 				<!-- Title -->
 				<div class="col-12 d-flex flex-column align-items-center">
 					<h1 class="mt-5 text-center">Find a Meaningful Research, Blog, or Survey</h1>
@@ -139,7 +139,7 @@
 				<!-- Content card -->
 				<div class="col-12 col-md-6 col-xxl-4">
 					<div class="content-card p-3 p-sm-4 p-lg-5 p-xxl-4 rounded-4">
-						<div class="card-img-container rounded-4" style="background-image: url('../assets/images/Online-Dating.jpg');"></div>
+						<div class="card-img-container rounded-4" style="background-image: url('../assets/images/posts/Online-Dating.jpg');"></div>
 
 						<div class="card-body mt-2">
 							<p class="accent-color fw-semibold mb-2">Survey</p>
@@ -170,6 +170,28 @@
 				</div>
 
 			</div>
+
+			<!-- Pagination -->
+			<div class="row mt-4">
+				<nav>
+					<ul class="pagination d-flex justify-content-center">
+						<li class="page-item" id="previous-page">
+							<a class="page-link" href="#">
+								<i class="fa-solid fa-angle-left align-middle"></i>
+								Previous Page
+							</a>
+						</li>
+
+						<li class="page-item" id="next-page">
+							<a class="page-link" href="#">
+								Next Page
+								<i class="fa-solid fa-angle-right align-middle"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
 		</div>
 	</main>
 
@@ -178,7 +200,7 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="text-center">
-						<h3>Contact</h2>
+						<h3>Contact</h3>
 
 						<div class="d-flex justify-content-center gap-4">
 							<a href="#footer">
@@ -191,15 +213,14 @@
 								<i class="fa-brands fa-instagram fa-2xl"></i>
 							</a>
 						</div>
-					</div>
 
-					<hr>
-					<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
+						<hr>
+						<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
-
 </body>
 
 </html>

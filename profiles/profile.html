@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Article</title>
+	<title>Profile</title>
 
 	<!-- Favicon -->
 	<link rel="icon" href="../assets/images/favicon.png" type="image/png" sizes="64x64">
@@ -17,10 +18,11 @@
 
 	<!-- Custom CSS -->
 	<link rel="stylesheet" href="../assets/css/global.css">
-	<link rel="stylesheet" href="../assets/css/article.css">
 
+	<!-- JS -->
 	<script type="module" src="script.js"></script>
 </head>
+
 
 <body>
 	<!-- Navbar -->
@@ -114,16 +116,52 @@
 
 	<main>
 		<div class="container">
-			<div id="content" class="row py-4 justify-content-center">
-				<div class="col-12 col-md-10 col-xl-9">
-					<div id="article-image" class="rounded-4 mb-3 border-accent-light d-none"></div>
-					<p id="article-type" class="accent-color text-center fw-semibold"></p>
-					<h1 id="title" class="fw-semibold"></h1>
-					<h3 id="subtitle" class="my-4"></h3>
-					<p id="mainText"></p>
+			<div class="row py-4">
+				<div class="col-12 d-flex flex-column align-items-center text-center">
+					<img id="user-profile-avatar" src="../assets/images/avatars/user-placeholder.webp" class="rounded-circle" height="150" alt="avatar">
+					<h2 id="username" class="my-4 fw-semibold">Username</h2>
+					<h5 class="mt-2">Bio</h5>
+					<p id="bio">---</p>
 
-					<div id="error-message"></div>
+					<div class="d-flex flex-column flex-md-row gap-4 my-5">
+						<div class="d-flex flex-column">
+							<h5 class="mb-0 fw-semibold">Created Posts</h5>
+							<p id="created-posts" class="my-0">0</p>
+						</div>
+						<div class="d-flex flex-column">
+							<h5 class="mb-0 fw-semibold">Favorite Posts</h5>
+							<p id="favorite-posts" class="my-0">0</p>
+						</div>
+					</div>
+
+					<div id="edit-button-container"></div>
 				</div>
+			</div>
+
+			<!-- Container with posts (created or favorited) -->
+			<div id="card-container" class="row py-5 gy-3 justify-content-center">
+
+			</div>
+
+			<!-- Pagination -->
+			<div class="row mt-4">
+				<nav>
+					<ul class="pagination d-flex justify-content-center">
+						<li class="page-item" id="previous-page">
+							<a class="page-link" href="#">
+								<i class="fa-solid fa-angle-left align-middle"></i>
+								Previous Page
+							</a>
+						</li>
+
+						<li class="page-item" id="next-page">
+							<a class="page-link" href="#">
+								Next Page
+								<i class="fa-solid fa-angle-right align-middle"></i>
+							</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</main>
@@ -134,7 +172,6 @@
 				<div class="col-12">
 					<div class="text-center">
 						<h3>Contact</h3>
-
 						<div class="d-flex justify-content-center gap-4">
 							<a href="#footer">
 								<i class="fa-brands fa-facebook fa-2xl"></i>
@@ -146,13 +183,13 @@
 								<i class="fa-brands fa-instagram fa-2xl"></i>
 							</a>
 						</div>
+
+						<hr>
+						<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
 					</div>
-					<hr>
-					<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
 				</div>
 			</div>
 		</div>
 	</footer>
 </body>
-
 </html>

@@ -3,6 +3,7 @@ const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
+import { setUserAvatarNavbar, setUserProfileLink } from "../assets/utils.js";
 
 const imageElement = document.getElementById("article-image");
 const articleTypeElement = document.getElementById("article-type");
@@ -14,6 +15,8 @@ const errorMessage = document.getElementById("error-message");
 // Get researchId from URL query parameter
 const urlParams = new URLSearchParams(window.location.search);
 const researchId = urlParams.get('id');
+setUserProfileLink();
+setUserAvatarNavbar();
 
 try {
 	// Get a post by ID from the URI
@@ -36,8 +39,8 @@ try {
 } catch (error) {
 	errorMessage.innerHTML = `
 	<div class="alert alert-danger mb-0 mt-3 fade show text-center">
-		<h5 class="fw-semibold">Not Found</h5>
-		<p>We apologize, but the article you're looking for cannot be found.</p>
+	<h5 class="fw-semibold">Not Found</h5>
+	<p>We apologize, but the article you're looking for cannot be found.</p>
 	</div>
 	`;
 

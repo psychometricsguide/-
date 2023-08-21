@@ -3,7 +3,13 @@ export function User(username, email, password)
 {
 	this.username = username,
 	this.email = email,
-	this.password = password
+	this.password = password,
+	this.avatarLink = '../assets/images/avatars/user-placeholder.webp',
+	this.bio = '---',
+	this.createdPosts = [],
+	this.favoritePosts = [],
+	this.dislikedPosts = [],
+	this.creationDate = this.getDate()
 }
 
 User.prototype.getDate = function()
