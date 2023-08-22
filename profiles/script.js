@@ -1,23 +1,24 @@
-// initialize all Bootstrap popovers
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
-import { checkRegistration, loadPosts, bindLikesDislikes, bindShareButtons, setUserProfileLink, setUserAvatarNavbar, bindPagination, getSessionID, getUserProfile, redirect  } from '../assets/utils.js';
+import { checkRegistration, loadPosts, setUserProfileLink, setUserAvatarNavbar, bindPagination, getSessionID, getUserProfile, redirect, getCreatedPostsByUser  } from '../assets/utils.js';
 
 /* User profile page functionality */
 document.addEventListener("DOMContentLoaded", async () => {
 	checkRegistration();
 
 	const user = await getUserProfile();
+	const createdPosts = await getCreatedPostsByUser(user._id);
+
 	setUserProfileLink();
 	setUserAvatarNavbar();
-	fillUserProfile(user);
-	bindLikesDislikes();
-	bindShareButtons();
-	bindPagination(1, user.createdPosts);
+	fillUserProfile(user, createdPosts);
+	bindPagination(1, createdPosts, 6);
+
+	// initialize all Bootstrap popovers
+	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 });
 
-async function fillUserProfile(user)
+async function fillUserProfile(user, posts)
 {
 	const user_profile_avatar = document.getElementById('user-profile-avatar');
 	const username = document.getElementById('username');
@@ -32,16 +33,16 @@ async function fillUserProfile(user)
 	created_posts.innerHTML = user.createdPosts.length;
 	favorite_posts.innerHTML = user.favoritePosts.length;
 
-	if(user.currentSessionID == getSessionID() ) {
+	if(user.currentSessionID == getSessionID()) {
 		edit_button_container.innerHTML = `
-		<button id="edit-profile-btn" data-session="${getSessionID()}" class="btn btn-default px-4 py-2">Edit Profile</button>
+		<button id="edit-profile-btn" class="btn btn-default px-4 py-2">Edit Profile</button>
 		`;
 
 		const edit_profile_btn = document.getElementById('edit-profile-btn');
 		edit_profile_btn.onclick = () => {
-			redirect('../edit/profile.html?session=' + getSessionID());
+			redirect('../edit/profile.html');
 		}
 	}
 
-	loadPosts(user.createdPosts, 1);
+	loadPosts(posts, 1, 6);
 }

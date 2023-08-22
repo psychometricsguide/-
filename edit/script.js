@@ -1,21 +1,20 @@
-// initialize all Bootstrap popovers
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
-
 
 import { serverBaseUrl } from '../assets/settings/serverURL.js';
-import { checkRegistration, setUserProfileLink, redirect, getUser, setUserAvatarNavbar, showErrorMessage, validateEmail, validatePassword, validateUsername  } from '../assets/utils.js';
+import { checkRegistration, setUserProfileLink, redirect, getUser, setUserAvatarNavbar, showErrorMessage, validateEmail, validateUsername  } from '../assets/utils.js';
 
 /* User edit profile page functionality */
 document.addEventListener("DOMContentLoaded", async () => {
 	checkRegistration();
 
 	const user = await getUser();
-	console.log(`user: `, user);
 
 	setUserProfileLink();
 	setUserAvatarNavbar();
 	fillUserProfile(user);
+
+	// initialize all Bootstrap popovers
+	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 });
 
 function fillUserProfile(user)

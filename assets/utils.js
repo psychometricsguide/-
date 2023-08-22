@@ -1,26 +1,29 @@
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
 
-export async function setUserProfileLink() {
-    document.getElementById('user-profile-link').href = `../profiles/profile.html?id=${await getUserID()}`;
-}
-
 export async function getUser() {
     let response = await fetch(serverBaseUrl + '/user/' + getSessionID());
     return await response.json();
 }
 
 export async function getUserProfile() {
-    // Get researchId from URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const user_id = urlParams.get('id');
 
-    let response = await fetch(serverBaseUrl + '/userProfile/' + user_id);
-    return await response.json();
+    return getUserByID(user_id);
 }
 
 export async function getUserID() {
     const user = await getUser();
     return user._id;
+}
+
+export async function getUserByID(userID) {
+    let response = await fetch(serverBaseUrl + '/userProfile/' + userID);
+    return await response.json();
+}
+
+export async function setUserProfileLink() {
+    document.getElementById('user-profile-link').href = `../profiles/profile.html?id=${await getUserID()}`;
 }
 
 export async function setUserAvatarNavbar() {
@@ -38,16 +41,23 @@ export async function getAllPosts() {
 }
 
 export async function checkRegistration() {
-
     try {
-        if(getSessionID() == null || getSessionID() == undefined) {
+        const response = await fetch(serverBaseUrl + '/checkRegistration/' + getSessionID());
+
+        if(response.status != 200) {
             redirect('../sign_up/');
-        } else {
-            if(await getUser() == null) {
-                redirect('../sign_up/');
-            }
         }
-    } catch (e) { }
+    } catch (e) {
+        redirect('../sign_up/');
+    }
+}
+
+export function checkAuthorization() {
+    if (getSessionID() != null) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 export function renderRatedPosts(ratedPostsByUser) {
@@ -69,20 +79,21 @@ export function renderRatedPosts(ratedPostsByUser) {
     }
 }
 
-export async function loadPosts(posts, pageNumber) {
+export async function loadPosts(posts, pageNumber, numOfPostsPerPage) {
     const cardContainer = document.getElementById("card-container");
-    const pageSize = 12; // Number of posts per page
 
     // Calculate the start and end indexes for the current page
-    const startIndex = (pageNumber - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
+    const startIndex = (pageNumber - 1) * numOfPostsPerPage;
+    const endIndex = Math.min(startIndex + numOfPostsPerPage, posts.length); // Limit endIndex to actual number of posts
     cardContainer.innerHTML = '';
 
     let data = await fetch(serverBaseUrl + `/ratedPostsByUser/${await getUserID()}`);
     const ratedPostsByUser =  await data.json();
 
-    for (let i = startIndex; i < endIndex && i < posts.length; i++)
+    for (let i = endIndex - 1; i >= startIndex && i >= 0; i--)
     {
+        const author = await getUserByID(posts[i]['author_id']);
+
         cardContainer.innerHTML += `
         <!-- Content card -->
         <div class="col-12 col-md-6 col-xxl-4 searchable">
@@ -96,7 +107,7 @@ export async function loadPosts(posts, pageNumber) {
         <div class="d-flex justify-content-between align-items-start mt-4">
         <!-- Author -->
         <span class="text-center">
-        <a href="#"><img src="${posts[i]['author_image_url']}" class="rounded-circle" height="27" width="27" alt="author"></a>
+        <a href="../profiles/profile.html?id=${posts[i]['author_id']}"><img src="${author['avatarLink']}" class="rounded-circle" height="27" width="27" alt="author"></a>
         <span class="fw-semibold">${posts[i]['date']}</span>
         </span>
 
@@ -120,16 +131,24 @@ export async function loadPosts(posts, pageNumber) {
     }
 
     if (cardContainer.childNodes.length == 0) {
-        cardContainer.innerHTML = '<p class="fw-semibold fs-4 text-center my-0">🙈</p>';
-        cardContainer.innerHTML += '<p class="fw-semibold fs-4 text-center">You have reached the end!</p>';
-        cardContainer.innerHTML += '<p class="text-center my-0">There are no more results to show.</p>';
+        cardContainer.innerHTML = `
+        <div>
+        <p class="fw-semibold fs-4 text-center my-0">🙈</p>
+        <p class="fw-semibold fs-4 text-center">You have reached the end!</p>
+        <p class="text-center my-0">There are no more results to show.</p>
+        </div>
+        `;
+    } else {
+        bindLikesDislikes();
+        bindShareButtons();
+        renderRatedPosts(ratedPostsByUser);
+
     }
-    renderRatedPosts(ratedPostsByUser);
     return ratedPostsByUser;
 }
 
 // Likes, dislikes
-export function bindLikesDislikes()
+function bindLikesDislikes()
 {
     const cardContainer = document.getElementById("card-container");
 
@@ -199,7 +218,7 @@ async function updateLikesDislikes(button) {
     });
 }
 
-export function bindShareButtons()
+function bindShareButtons()
 {
     const shareButtons = document.querySelectorAll('.share');
 
@@ -219,7 +238,7 @@ export function bindShareButtons()
     });
 }
 
-export function bindPagination(currentPage, posts)
+export function bindPagination(currentPage, posts, numOfPostsPerPage)
 {
     const previousPage = document.getElementById("previous-page");
     const nextPage = document.getElementById("next-page");
@@ -227,13 +246,16 @@ export function bindPagination(currentPage, posts)
     previousPage.onclick = async () => {
         if (currentPage > 1) {
             currentPage--;
-            loadPosts(posts, currentPage);
+            loadPosts(posts, currentPage, numOfPostsPerPage);
         }
     };
 
     nextPage.onclick = async () => {
-        currentPage++;
-        loadPosts(posts, currentPage);
+        // Check if there are more pages to navigate to
+        if (currentPage <= Math.ceil(posts.length / numOfPostsPerPage)) {
+            currentPage++;
+            loadPosts(posts, currentPage, numOfPostsPerPage);
+        }
     };
 }
 
@@ -248,36 +270,80 @@ export async function showErrorMessage(response)
     errorMessageField.innerHTML =
     `
     <div class="alert alert-danger alert-dismissible mb-0 mt-3 fade show">
-    <h5>Error ${response.status}</h5>
-    ${await response.text()}
-    <div class="btn-close" data-bs-dismiss="alert"></div>
+        <h5>Error ${response.status}</h5>
+        ${await response.text()}
+        <div class="btn-close" data-bs-dismiss="alert"></div>
     </div>`;
+}
+
+export async function getCreatedPostsByUser(userid) {
+    const response = await fetch(serverBaseUrl + '/userCreatedPosts/' + userid);
+    const createdPosts = await response.json();
+
+    return createdPosts;
+}
+
+export async function deletePost(postID) {
+    try {
+        const response = await fetch(serverBaseUrl + '/deletePost', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                post_id: postID
+            })
+        });
+
+        if (response.status == 200) {
+            redirect('../home/');
+        }
+    } catch (error) {
+        console.error('Error by deleting an article:', error);
+    }
+}
+
+export function showArticleNotFoundMessage() {
+    const errorMessage = document.getElementById("error-message");
+
+    errorMessage.innerHTML = `
+    <div class="alert alert-danger mb-0 mt-3 fade show text-center">
+        <h5 class="fw-semibold">Not Found</h5>
+        <p>We apologize, but the article you're looking for cannot be found.</p>
+    </div>
+    `;
 }
 
 
 /* Validate functions */
 export function validateUsername(username)
 {
-	if (username.length >= 2 && username.length <= 20)
-	    return true;
-	else
-	    return false;
+    if (username.length >= 2 && username.length <= 20) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 export function validateEmail(email) {
-	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-	if (email.match(emailRegex))
-	    return true;
-	else
-	    return false;
+    if (email.match(emailRegex)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 export function validatePassword(password) {
-	if(password.length >= 6 && password.length <= 30 && !password.includes(' '))
-	    return true;
-	else
-	    return false;
+    if(password.length >= 6 && password.length <= 30 && !password.includes(' ')) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 /***** Cookies - Manage SessionID *******/
@@ -287,13 +353,17 @@ export function getSessionID() {
     if(sessionID) {
         return sessionID;
     } else {
-        redirect('../sign_up/');
+        return null;
     }
 }
 
 export async function setSessionID(response) {
-    const sessionID = await response.json();
-    setCookie('sessionID', sessionID, 2);
+    try {
+        const sessionID = await response.json();
+        setCookie('sessionID', sessionID, 1);
+    } catch (error) {
+        console.log('Error setting session id: ' + error);
+    }
 }
 
 export function removeSessionID() {
@@ -322,10 +392,14 @@ function setCookie(name, value, days) {
     expirationDate.setDate(expirationDate.getDate() + days);
 
     const cookieValue = encodeURIComponent(value) + (days ? `; expires=${expirationDate.toUTCString()}` : '');
-    document.cookie = `${name}=${cookieValue}; path=/`;
+
+    // Include the SameSite and Secure attributes
+    const cookieOptions = `path=/; SameSite=None; Secure`;
+
+    document.cookie = `${name}=${cookieValue}; ${cookieOptions}`;
 }
 
 // Delete a cookie
 function deleteCookie(name) {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=None; Secure`;
 }

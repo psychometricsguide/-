@@ -1,11 +1,10 @@
 
-export function Post(image_url, author_id, author_image_url, article_type, title, subtitle, mainText)
+export function Post(author_id, image_url, article_type, title, subtitle, mainText)
 {
 	this.likes = 0,
 	this.dislikes = 0,
 	this.image_url = image_url,
 	this.author_id = author_id,
-	this.author_image_url = author_image_url,
 	this.date = this.getDate(),
 	this.article_type = article_type,
 	this.title = title,

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Create Article</title>
+
+	<!-- Favicon -->
+	<link rel="icon" href="../assets/images/favicon.png" type="image/png" sizes="64x64">
+
+	<!-- Icons -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+
+	<!-- Bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous" defer></script>
+
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="../assets/css/global.css">
+
+	<!-- JS -->
+	<script type="module" src="script.js"></script>
+</head>
+
+
+<body>
+	<!-- Navbar -->
+	<header class="position-sticky top-0">
+		<script type="module">
+			import { Header } from '../assets/components/Header.js';
+			document.querySelector('header').innerHTML = Header;
+		</script>
+	</header>
+
+	<main>
+		<div class="container">
+			<div class="row justify-content-center">
+				<div id="error-message" class="col-12 col-md-6"></div>
+			</div>
+
+			<div class="row py-5 justify-content-center">
+				<form class="col-12 col-lg-9 col-xxl-8">
+					<h1 class="text-center fw-semibold">Create Your Article</h1>
+					<p class="mb-4 muted-color text-center">Write and Share Your Insights with the World</p>
+
+					<!-- Preview Image -->
+					<div class="form-floating mb-4">
+						<input type="text" class="form-control" id="image" placeholder="">
+						<label for="image" class="muted-color">Image Link from Internet (optional)</label>
+					</div>
+
+					<!-- Title -->
+					<div class="form-floating mb-3">
+						<input required minlength="5" maxlength="52" type="text" class="form-control" id="title" placeholder="">
+						<label for="title" class="muted-color">Title</label>
+					</div>
+
+					<!-- Subtitle -->
+					<div class="form-floating mb-3">
+						<input required minlength="5" maxlength="90" type="text" class="form-control" id="subtitle" placeholder="">
+						<label for="title" class="muted-color">Subtitle</label>
+					</div>
+
+					<!-- Main Text -->
+					<div class="form-floating">
+						<textarea required minlength="750" class="form-control" placeholder="" id="mainText" style="min-height: 200px"></textarea>
+						<label for="mainText" class="muted-color">Main Text</label>
+					</div>
+
+					<!-- Article Type -->
+					<div class="form-floating mt-3">
+						<select class="form-select" id="article-type">
+							<option value="Post">Blog Post</option>
+							<option value="Research">Research</option>
+							<option value="Survey">Survey</option>
+						</select>
+						<label for="article-type" class="muted-color">Choose a type of your Article</label>
+					</div>
+
+					<button id="create-post-btn" class="btn btn-default px-4 py-2 mt-5">Create an Article</button>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer id="footer" class="py-3 position-sticky top-100">
+		<script type="module">
+			import { Footer } from '../assets/components/Footer.js';
+			document.querySelector('footer').innerHTML = Footer;
+		</script>
+	</footer>
+</body>
+
+</html>

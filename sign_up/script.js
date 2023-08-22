@@ -1,12 +1,10 @@
-import { User } from "../assets/value_objects/User.js";
-import { serverBaseUrl } from "../assets/settings/serverURL.js";
-import { redirect, removeSessionID, setSessionID, showErrorMessage, validateEmail, validatePassword, validateUsername  } from '../assets/utils.js';
-
-
 // initialize all Bootstrap popovers
 const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
+import { User } from "../assets/value_objects/User.js";
+import { serverBaseUrl } from "../assets/settings/serverURL.js";
+import { redirect, removeSessionID, setSessionID, showErrorMessage, validateEmail, validatePassword, validateUsername  } from '../assets/utils.js';
 
 // Input fields
 let usernameField = document.getElementById('username');
@@ -17,7 +15,7 @@ let passwordField = document.getElementById('password');
 let sigupBtn = document.getElementById('sigupBtn');
 let loginBtn = document.getElementById('loginBtn');
 
-/* Remove UserID */
+/* Remove sessionID by redirecting on this page */
 removeSessionID();
 
 /* Sign up Button */
@@ -37,7 +35,7 @@ sigupBtn.onclick = async (event) => {
 		});
 
 		if (response.status == 200) {
-			setSessionID(response);
+			await setSessionID(response);
 			redirect('../home/');
 		} else {
 			showErrorMessage(response);
@@ -61,14 +59,13 @@ loginBtn.onclick = async (event) => {
 		});
 
 		if (response.status == 200) {
-			setSessionID(response);
+			await setSessionID(response);
 			redirect('../home/');
 		} else {
 			showErrorMessage(response);
 		}
 	}
 }
-
 
 /* Helper functions */
 function createNewUser(username, email, password)

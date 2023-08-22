@@ -1,9 +1,5 @@
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
-import { checkRegistration, loadPosts, bindLikesDislikes, getAllPosts, bindShareButtons, setUserProfileLink, bindPagination, setUserAvatarNavbar  } from '../assets/utils.js';
-
-// initialize all Bootstrap popovers
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+import { checkRegistration, loadPosts, getAllPosts, setUserProfileLink, bindPagination, setUserAvatarNavbar  } from '../assets/utils.js';
 
 /* Homepage functionality */
 document.addEventListener("DOMContentLoaded", async () => {
@@ -11,13 +7,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setUserProfileLink();
     setUserAvatarNavbar();
-    let ratedPostsByUser = await loadPosts(await getAllPosts(), 1); // 1 = initial page number
 
-    // bindPagination(1, ratedPostsByUser);
-    bindPagination(1, await getAllPosts());
-    bindLikesDislikes();
-    bindShareButtons();
+    loadPosts(await getAllPosts(), 1, 12);
+    bindPagination(1, await getAllPosts(), 12);
     bindSearchField();
+
+    // initialize all Bootstrap popovers
+	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 });
 
 /* Search field */

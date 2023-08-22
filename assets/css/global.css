@@ -48,6 +48,7 @@ html {
 
 body {
 	background-color: var(--primary-color);
+	min-height: 100vh;
 }
 
 .accent-color, .active {

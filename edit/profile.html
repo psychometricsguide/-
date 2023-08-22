@@ -33,91 +33,10 @@
 <body>
 	<!-- Navbar -->
 	<header class="position-sticky top-0">
-		<nav class="navbar navbar-expand-lg">
-			<div class="container">
-
-				<a class="navbar-brand" href="../home/">
-					<img src="../assets/images/Logo.svg" class="rounded-circle" height="40" alt="Logo">
-					<span class="title fs-3 ms-md-2 align-middle">PsychoMetricsGuide</span>
-				</a>
-
-				<button class="navbar-toggler p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false">
-					<i class="fa-solid fa-bars fa-lg"></i>
-				</button>
-
-				<div class="collapse navbar-collapse justify-content-end" id="navbar">
-					<ul class="navbar-nav nav-pills gap-3 text-center pt-3 pt-lg-0 fw-semibold">
-						<li class="nav-item">
-							<a href="#" class="nav-link muted-color" data-bs-toggle="popover" data-bs-custom-class="info-popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Currently disabled">
-								Surveys
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="#" class="nav-link muted-color" data-bs-toggle="popover" data-bs-custom-class="info-popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Currently disabled">
-								Research
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="#" class="nav-link muted-color" data-bs-toggle="popover" data-bs-custom-class="info-popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Currently disabled">
-								Blog
-							</a>
-						</li>
-
-						<li class="nav-item">
-							<a href="#" class="nav-link muted-color" data-bs-toggle="popover" data-bs-custom-class="info-popover" data-bs-trigger="hover focus" data-bs-placement="bottom" data-bs-content="Currently disabled">
-								About
-							</a>
-						</li>
-
-						<li class="nav-item dropdown d-flex align-items-center justify-content-center">
-							<a class="nav-link dropdown-toggle p-0" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-								<img id="user-avatar" src="../assets/images/avatars/user-placeholder.webp" class="rounded-circle" height="40" alt="avatar">
-							</a>
-							<ul class="dropdown-menu dropdown-menu-end px-2">
-								<li>
-									<a id="user-profile-link" class="dropdown-item rounded-3" href="#">
-										<i class="fa-solid fa-user muted-color"></i>
-										Profile
-									</a>
-								</li>
-
-								<li><hr class="dropdown-divider"></li>
-								<li>
-									<a class="dropdown-item rounded-3" href="#">
-										<i class="fa-solid fa-star muted-color"></i>
-										Go Pro
-									</a>
-								</li>
-
-								<li>
-									<a class="dropdown-item rounded-3" href="#">
-										<i class="fa-solid fa-heart muted-color"></i>
-										My Favorites
-									</a>
-								</li>
-
-								<li>
-									<a class="dropdown-item rounded-3" href="#">
-										<i class="fa-solid fa-bell muted-color"></i>
-										Notifications
-									</a>
-								</li>
-
-								<li><hr class="dropdown-divider"></li>
-								<li>
-									<a class="dropdown-item rounded-3" href="../sign_up/">
-										<i class="fa-solid fa-arrow-right-from-bracket muted-color"></i>
-										Sign Out
-									</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+		<script type="module">
+			import { Header } from '../assets/components/Header.js';
+			document.querySelector('header').innerHTML = Header;
+		</script>
 	</header>
 
 	<main>
@@ -131,14 +50,18 @@
 				<div class="col-12 col-md-5 col-lg-4 d-flex flex-column align-items-center">
 					<img id="avatar" src="../assets/images/avatars/user-placeholder.webp" class="rounded-circle user-avatar" height="150" alt="avatar">
 
-					<select id="user-avatars" class="form-select form-select-lg mb-3 mt-4">
-						<option value="../assets/images/avatars/user-placeholder.webp">Default avatar</option>
-						<option value="../assets/images/avatars/default-avatar1.png">Avatar 1</option>
-						<option value="../assets/images/avatars/default-avatar2.png">Avatar 2</option>
-						<option value="../assets/images/avatars/default-avatar3.png">Avatar 3</option>
-						<option value="../assets/images/avatars/default-avatar4.png">Avatar 4</option>
-						<option value="../assets/images/avatars/default-avatar5.png">Avatar 5</option>
-					</select>
+					<div class="form-floating mb-3 mt-4">
+						<select id="user-avatars" class="form-select form-select-lg">
+							<option value="../assets/images/avatars/user-placeholder.webp">Default avatar</option>
+							<option value="../assets/images/avatars/default-avatar1.png">Avatar 1</option>
+							<option value="../assets/images/avatars/default-avatar2.png">Avatar 2</option>
+							<option value="../assets/images/avatars/default-avatar3.png">Avatar 3</option>
+							<option value="../assets/images/avatars/default-avatar4.png">Avatar 4</option>
+							<option value="../assets/images/avatars/default-avatar5.png">Avatar 5</option>
+						</select>
+
+						<label for="user-avatars" class="muted-color">Choose an Avatar</label>
+					</div>
 				</div>
 
 				<form class="col-12 col-lg-8">
@@ -166,30 +89,12 @@
 		</div>
 	</main>
 
+	<!-- Footer -->
 	<footer id="footer" class="py-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="text-center">
-						<h3>Contact</h3>
-						<div class="d-flex justify-content-center gap-4">
-							<a href="#footer">
-								<i class="fa-brands fa-facebook fa-2xl"></i>
-							</a>
-							<a href="https://t.me/Nikolyascha" target="_blank">
-								<i class="fa-brands fa-telegram fa-2xl"></i>
-							</a>
-							<a href="#footer">
-								<i class="fa-brands fa-instagram fa-2xl"></i>
-							</a>
-						</div>
-						<hr>
-						<p class="text-center">Copyright &copy; 2023 PsychoMetricsGuide</p>
-					</div>
-				</div>
-			</div>
-		</div>
+		<script type="module">
+			import { Footer } from '../assets/components/Footer.js';
+			document.querySelector('footer').innerHTML = Footer;
+		</script>
 	</footer>
-
 </body>
 </html>
