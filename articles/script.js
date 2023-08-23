@@ -1,5 +1,5 @@
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
-import { deletePost, getUserID, setUserAvatarNavbar, setUserProfileLink, showArticleNotFoundMessage, checkAuthorization, setStorageValue, deleteStorageValue, redirect } from "../assets/utils.js";
+import { deletePost, getUserID, setUserAvatarNavbar, setUserProfileLink, showArticleNotFoundMessage, checkAuthorization, setStorageValue, redirect } from "../assets/utils.js";
 
 const imageElement = document.getElementById("article-image");
 const publicationDate = document.getElementById("date");
