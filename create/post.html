@@ -35,11 +35,7 @@
 
 	<main>
 		<div class="container">
-			<div class="row justify-content-center">
-				<div id="error-message" class="col-12 col-md-6"></div>
-			</div>
-
-			<div class="row py-5 justify-content-center">
+			<div class="row pt-5 pb-3 justify-content-center">
 				<form class="col-12 col-lg-9 col-xxl-8">
 					<h1 class="text-center fw-semibold">Create Your Article</h1>
 					<p class="mb-4 muted-color text-center">Write and Share Your Insights with the World</p>
@@ -52,13 +48,13 @@
 
 					<!-- Title -->
 					<div class="form-floating mb-3">
-						<input required minlength="5" maxlength="52" type="text" class="form-control" id="title" placeholder="">
+						<input required minlength="5" maxlength="60" type="text" class="form-control" id="title" placeholder="">
 						<label for="title" class="muted-color">Title</label>
 					</div>
 
 					<!-- Subtitle -->
 					<div class="form-floating mb-3">
-						<input required minlength="5" maxlength="90" type="text" class="form-control" id="subtitle" placeholder="">
+						<input required minlength="5" maxlength="85" type="text" class="form-control" id="subtitle" placeholder="">
 						<label for="title" class="muted-color">Subtitle</label>
 					</div>
 
@@ -80,6 +76,11 @@
 
 					<button id="create-post-btn" class="btn btn-default px-4 py-2 mt-5">Create an Article</button>
 				</form>
+			</div>
+
+			<!-- Container for error-messages -->
+			<div class="row justify-content-center mb-5 mt-0">
+				<div id="error-message" class="col-12 col-md-6"></div>
 			</div>
 		</div>
 	</main>

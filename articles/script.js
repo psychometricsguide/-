@@ -1,7 +1,8 @@
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
-import { deletePost, getUserID, setUserAvatarNavbar, setUserProfileLink, showArticleNotFoundMessage, checkAuthorization } from "../assets/utils.js";
+import { deletePost, getUserID, setUserAvatarNavbar, setUserProfileLink, showArticleNotFoundMessage, checkAuthorization, setStorageValue, deleteStorageValue, redirect } from "../assets/utils.js";
 
 const imageElement = document.getElementById("article-image");
+const publicationDate = document.getElementById("date");
 const articleTypeElement = document.getElementById("article-type");
 const titleElement = document.getElementById("title");
 const subtitleElement = document.getElementById("subtitle");
@@ -38,20 +39,42 @@ async function loadArticle() {
 				imageElement.classList.remove("d-none");
 			}
 			articleTypeElement.innerHTML = selectedPost.article_type;
-			titleElement.innerHTML = selectedPost.title;
-			subtitleElement.innerHTML = selectedPost.subtitle;
+			publicationDate.innerHTML = selectedPost.date;
+			titleElement.innerText = selectedPost.title;
+			subtitleElement.innerText = selectedPost.subtitle;
 			mainTextElement.innerText = selectedPost.mainText;
 
 			if(checkAuthorization()) {
 				if(selectedPost.author_id ==  await getUserID()) {
-					const delete_button_container = document.getElementById("delete-button-container");
-					delete_button_container.innerHTML = `
-					<button id="delete-post-btn" class="btn btn-danger my-3 text-white px-4 py-2">
-					<i class="fa-solid fa-trash"></i>
-					Delete Article
+					const modify_buttons_container = document.getElementById("modify-buttons-container");
+
+					modify_buttons_container.innerHTML = `
+					<button id="edit-post-btn" class="btn btn-primary my-3 text-white px-4 py-2">
+						<i class="fa-solid fa-pen"></i>
+						Edit Article
 					</button>`;
 
+					modify_buttons_container.innerHTML += `
+					<button id="delete-post-btn" class="btn btn-danger my-3 text-white px-4 py-2">
+						<i class="fa-solid fa-trash"></i>
+						Delete Article
+					</button>`;
+
+					const edit_button = document.getElementById('edit-post-btn');
 					const delete_button = document.getElementById('delete-post-btn');
+
+					edit_button.onclick = () => {
+						setStorageValue('post_to_edit', {
+							id: selectedPost._id,
+							image_link: selectedPost.image_url,
+							title: selectedPost.title,
+							subtitle: selectedPost.subtitle,
+							mainText: selectedPost.mainText,
+							article_type: selectedPost.article_type
+						});
+
+						redirect('../create/post.html?action=edit');
+					}
 
 					delete_button.onclick = async () => {
 						const confirmation = window.confirm('Do you want to delete the article?');

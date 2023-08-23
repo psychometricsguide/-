@@ -1,20 +1,19 @@
 import { serverBaseUrl } from "../assets/settings/serverURL.js";
-import { checkRegistration, loadPosts, getAllPosts, setUserProfileLink, bindPagination, setUserAvatarNavbar  } from '../assets/utils.js';
+import { checkRegistration, loadPosts, getAllPosts, setUserProfileLink, setUserAvatarNavbar, bindPagination, checkAuthorization  } from '../assets/utils.js';
 
 /* Homepage functionality */
 document.addEventListener("DOMContentLoaded", async () => {
-    checkRegistration();
-
-    setUserProfileLink();
-    setUserAvatarNavbar();
+    if(checkAuthorization()) {
+        checkRegistration();
+        setUserProfileLink();
+        setUserAvatarNavbar();
+    }
 
     loadPosts(await getAllPosts(), 1, 12);
-    bindPagination(1, await getAllPosts(), 12);
     bindSearchField();
-
     // initialize all Bootstrap popovers
-	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-	const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 });
 
 /* Search field */
@@ -37,7 +36,7 @@ function bindSearchField()
             });
 
             const posts = (await response.json()).postsArray;
-            await loadPosts(posts, 1);
+            await loadPosts(posts, 1, 12);
         }
     }
 }

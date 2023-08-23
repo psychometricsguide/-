@@ -1,17 +1,18 @@
 
-import { checkRegistration, loadPosts, setUserProfileLink, setUserAvatarNavbar, bindPagination, getSessionID, getUserProfile, redirect, getCreatedPostsByUser  } from '../assets/utils.js';
+import { checkRegistration, loadPosts, setUserProfileLink, setUserAvatarNavbar, bindPagination, getSessionID, getUserProfile, redirect, getCreatedPostsByUser, checkAuthorization  } from '../assets/utils.js';
 
 /* User profile page functionality */
 document.addEventListener("DOMContentLoaded", async () => {
-	checkRegistration();
+	if(checkAuthorization()) {
+		checkRegistration();
+		setUserProfileLink();
+		setUserAvatarNavbar();
+	}
 
 	const user = await getUserProfile();
 	const createdPosts = await getCreatedPostsByUser(user._id);
 
-	setUserProfileLink();
-	setUserAvatarNavbar();
 	fillUserProfile(user, createdPosts);
-	bindPagination(1, createdPosts, 6);
 
 	// initialize all Bootstrap popovers
 	const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');

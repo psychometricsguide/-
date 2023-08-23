@@ -44,7 +44,7 @@ export const Header = `
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end px-2">
 						<li>
-							<a id="user-profile-link" class="dropdown-item rounded-3" href="#">
+							<a id="user-profile-link" class="dropdown-item rounded-3" href="../sign_up/">
 								<i class="fa-solid fa-user muted-color"></i>
 								Profile
 							</a>

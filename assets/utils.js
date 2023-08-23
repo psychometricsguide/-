@@ -87,9 +87,6 @@ export async function loadPosts(posts, pageNumber, numOfPostsPerPage) {
     const endIndex = Math.min(startIndex + numOfPostsPerPage, posts.length); // Limit endIndex to actual number of posts
     cardContainer.innerHTML = '';
 
-    let data = await fetch(serverBaseUrl + `/ratedPostsByUser/${await getUserID()}`);
-    const ratedPostsByUser =  await data.json();
-
     for (let i = endIndex - 1; i >= startIndex && i >= 0; i--)
     {
         const author = await getUserByID(posts[i]['author_id']);
@@ -141,10 +138,14 @@ export async function loadPosts(posts, pageNumber, numOfPostsPerPage) {
     } else {
         bindLikesDislikes();
         bindShareButtons();
-        renderRatedPosts(ratedPostsByUser);
+        bindPagination(pageNumber, posts, numOfPostsPerPage);
 
+        if(checkAuthorization()) {
+            let data = await fetch(serverBaseUrl + `/ratedPostsByUser/${await getUserID()}`);
+            const ratedPostsByUser =  await data.json();
+            renderRatedPosts(ratedPostsByUser);
+        }
     }
-    return ratedPostsByUser;
 }
 
 // Likes, dislikes
@@ -155,7 +156,11 @@ function bindLikesDislikes()
     cardContainer.onclick = (event) => {
         const target = event.target.closest('.likes') || event.target.closest('.dislikes');
         if (target && cardContainer.contains(target)) {
-            updateLikesDislikes(target);
+            if(checkAuthorization()) {
+                updateLikesDislikes(target);
+            } else {
+                redirect('../sign_up/');
+            }
         }
     }
 }
@@ -226,11 +231,11 @@ function bindShareButtons()
         shareBtn.onclick = () => {
             if (navigator.share) {
                 const newURL = new URL(window.location.href);
-                newURL.pathname = '/client/articles/article.html';
+                newURL.pathname = '/web/articles/article.html';
                 newURL.searchParams.set('id', shareBtn.dataset.postid);
 
                 navigator.share({
-                    title: 'Share Article',
+                    title: 'Share Article from PsychoMetricsGuide',
                     url: newURL
                 })
             }
@@ -270,9 +275,9 @@ export async function showErrorMessage(response)
     errorMessageField.innerHTML =
     `
     <div class="alert alert-danger alert-dismissible mb-0 mt-3 fade show">
-        <h5>Error ${response.status}</h5>
-        ${await response.text()}
-        <div class="btn-close" data-bs-dismiss="alert"></div>
+    <h5>Error ${response.status}</h5>
+    ${await response.text()}
+    <div class="btn-close" data-bs-dismiss="alert"></div>
     </div>`;
 }
 
@@ -308,8 +313,8 @@ export function showArticleNotFoundMessage() {
 
     errorMessage.innerHTML = `
     <div class="alert alert-danger mb-0 mt-3 fade show text-center">
-        <h5 class="fw-semibold">Not Found</h5>
-        <p>We apologize, but the article you're looking for cannot be found.</p>
+    <h5 class="fw-semibold">Not Found</h5>
+    <p>We apologize, but the article you're looking for cannot be found.</p>
     </div>
     `;
 }
@@ -402,4 +407,19 @@ function setCookie(name, value, days) {
 // Delete a cookie
 function deleteCookie(name) {
     document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=None; Secure`;
+}
+
+
+/* Local storage management */
+
+export function getStorageValue(name) {
+    return JSON.parse(localStorage.getItem(name));
+}
+
+export function setStorageValue(name, value) {
+    localStorage.setItem(name, JSON.stringify(value));
+}
+
+export function deleteStorageValue(name) {
+    localStorage.removeItem(name);
 }
