@@ -11,3 +11,9 @@
 	/* filter: blur(1px);
 	-webkit-filter: blur(1px); */
 }
+
+#mainText {
+    font-size: calc(1rem + 0.15vw) !important;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}

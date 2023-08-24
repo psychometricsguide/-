@@ -4,7 +4,7 @@ export const Footer = `
 	<div class="row">
 		<div class="col-12">
 			<div class="text-center">
-				<h3>Contact</h3>
+				<h3 class="mb-3">Contact</h3>
 				<div class="d-flex justify-content-center gap-4">
 					<a href="../profiles/profile.html?id=64e30ff4b058c4f2f01ee140">
 						<i class="fa-solid fa-circle-user fa-2xl"></i>
